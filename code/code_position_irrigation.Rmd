@@ -1,0 +1,205 @@
+---
+title: "Traditional irrigation is more than just a production strategy"
+subtitle: "R code"
+author: "Arnald Puy"
+header-includes:
+  - \usepackage[font=footnotesize]{caption}
+  - \usepackage{dirtytalk}
+  - \usepackage{booktabs}
+  - \usepackage{tabulary}
+  - \usepackage{enumitem}
+  - \usepackage{lmodern}
+  - \usepackage{amsmath}
+  - \usepackage{mathtools}
+  - \usepackage[T1]{fontenc}
+  - \usepackage{tikz}
+output:
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+    keep_tex: true
+  word_document:
+    toc: no
+    toc_depth: '2'
+  html_document:
+    keep_md: true
+bibliography: references.bib
+link-citations: yes
+fontsize: 11pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, dev = "pdf", cache = TRUE)
+```
+
+\newpage
+
+```{r preliminary, warning=FALSE, message=FALSE, results="hide"}
+# PRELIMINARY FUNCTIONS #######################################################
+
+library(sensobol)
+sensobol::load_packages(c("data.table", "ggplot2", "sf", "rnaturalearth",
+                          "rnaturalearthdata", "ggrepel", "here", "readxl",
+                          "ggwordcloud", "cowplot", "benchmarkme"))
+
+# Source all .R files in the "functions" folder -------------------------------
+
+r_functions <- list.files(path = here("functions"),
+                          pattern = "\\.R$", full.names = TRUE)
+invisible(lapply(r_functions, source))
+```
+
+\newpage
+
+# Interview locations
+
+```{r locations, dependson="preliminary"}
+# INTERVIEW LOCATIONS #########################################################
+
+locations <- data.table(
+  place = c("Dúrcal", "Huétor-Tajar", "Murcia", "Ricote", "Sudanell", "Arriate", "Oria"),
+  lon   = c(-3.5694,  -4.0439,        -1.1307,  -1.4361,   0.6011,    -5.0606,   -2.2731),
+  lat   = c(37.0022,   37.1964,        37.9922,  38.0714,  41.5261,    36.7914,   37.5225)
+)
+```
+
+```{r boundary, dependson="preliminary"}
+# SPAIN BOUNDARY ##############################################################
+
+spain <- ne_countries(scale = "medium", country = "Spain", returnclass = "sf")
+```
+
+## Plot map
+
+```{r plot, fig.width=3, fig.height=3, dependson=c("locations","boundary")}
+# PLOT ########################################################################
+
+plot_locations <- ggplot() +
+  geom_sf(data = spain, fill = "#f5f0e8", color = "#aaaaaa", linewidth = 0.4) +
+  geom_point(data = locations,
+             aes(x = lon, y = lat),
+             shape = 21, fill = "#c0392b", color = "white",
+             size = 3.5, stroke = 0.8) +
+  geom_text_repel(data = locations,
+                  aes(x = lon, y = lat, label = place),
+                  size = 3.2, family = "serif", color = "#222222",
+                  box.padding = 0.5, point.padding = 0.3,
+                  segment.color = "#888888", segment.linewidth = 0.4,
+                  min.segment.length = 0.2,
+                  max.overlaps = Inf, seed = 42) +
+  coord_sf(xlim = c(-9.5, 4.5), ylim = c(35.5, 44.5), expand = FALSE) +
+  labs(title = NULL, x = NULL, y = NULL) +
+  theme_AP() +
+  theme(
+    panel.background = element_rect(fill = "#dce8f0", color = NA),
+    panel.grid       = element_line(color = "#cccccc", linewidth = 0.2),
+    axis.text        = element_text(size = 8, color = "#555555"),
+    plot.margin      = margin(10, 10, 10, 10)
+  )
+
+plot_locations
+```
+
+\newpage
+
+## Load vocabulary data
+
+```{r load-vocab, dependson="preliminary"}
+# LOAD VOCABULARY DATA ########################################################
+
+# Irrigators: factors sheet, general list, English translation ----------------
+
+irrigators <- as.data.table(
+  read_xlsx(here("datasets", "input", "carmen_dataset_2.xlsx"), sheet = "factors")
+)
+irrigators_wc <- irrigators[list == "general" & !is.na(factor_en),
+                             .(n = .N), by = .(word = factor_en)]
+irrigators_wc[, group := "Traditional irrigators"]
+
+# Scientists: Sheet2, general list, cleaned terms -----------------------------
+
+scientists <- as.data.table(
+  read_xlsx(here("datasets", "input", "scientists_vocabulari.xlsx"), sheet = "Sheet2")
+)
+scientists_wc <- scientists[list == "general" & !is.na(factor_clean),
+                             .(n = .N), by = .(word = factor_clean)]
+scientists_wc[, group := "Scientists"]
+
+# Top 55 per group -----------------------------------------------------------
+
+irrigators_wc <- setorder(irrigators_wc, -n)[1:60]
+scientists_wc  <- setorder(scientists_wc,  -n)[1:60]
+
+# Combine ---------------------------------------------------------------------
+
+wc_data <- rbind(irrigators_wc, scientists_wc)
+```
+
+## Plot wordcloud
+
+```{r plot-wordcloud, fig.width=5.5, fig.height=2.5, dependson="load-vocab"}
+# WORDCLOUD ###################################################################
+
+plot_wordcloud <- ggplot(wc_data, aes(label = word, size = n)) +
+  geom_text_wordcloud(seed = 42, color = "black") +
+  scale_size_area(max_size = 4.6) +
+  facet_grid(. ~ group) +
+  theme_AP()
+
+plot_wordcloud
+```
+
+\newpage
+
+## Calculation of Spain's share
+
+We use the ten global irrigated-area datasets compiled by @puy_2026_19001233: [GAEZ+2015](https://www.nature.com/articles/s41597-021-01115-2), [GIAM](https://www.tandfonline.com/doi/full/10.1080/01431160802698919), [GMIA](https://www.fao.org/aquastat/en/geospatial-information/global-maps-irrigated-areas/latest-version), [GRIPC](https://www.sciencedirect.com/science/article/abs/pii/S0303243415000240?via%3Dihub), [LUH2](https://luh.umd.edu/), [Meier](https://hess.copernicus.org/articles/22/1119/2018/), [MIRCA 2000](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2008GB003435), [MIRCA OS](https://www.nature.com/articles/s41597-024-04313-w), [Nagaraj](https://www.sciencedirect.com/science/article/abs/pii/S0309170821000658?via%3Dihub), and [SPAM2010](https://essd.copernicus.org/articles/12/3545/2020/). For each dataset and spatial resolution (0.2°, 0.4°, 1°), we compute Spain's irrigated area (Mha), total European irrigated area (Mha), and Spain's percentage share.
+
+```{r spain_share}
+
+# READ IN DATASETS #############################################################
+
+country_level_irrigated_areas <- fread(here("datasets", "input",
+                                            "country_level_irrigated_areas.csv"))
+
+
+# Calculate --------------------------------------------------------------------
+
+country_level_irrigated_areas[continent == "Europe",
+                              .(spain_mha = sum(mha[country == "Spain"]),
+                                europe_mha = sum(mha),
+                                spain_share_pct = 100 * sum(mha[country == "Spain"]) / 
+                                  sum(mha)),
+                              by = .(dataset, resolution)]
+```
+
+
+\newpage
+
+# References
+
+<div id="refs"></div>
+
+\newpage
+
+# Session information
+
+```{r session_information, dependson="preliminary"}
+# SESSION INFORMATION #########################################################
+
+sessionInfo()
+
+## Return the machine CPU -----------------------------------------------------
+
+cat("Machine:     "); print(get_cpu()$model_name)
+
+## Return number of true cores -------------------------------------------------
+
+cat("Num cores:   "); print(parallel::detectCores(logical = FALSE))
+
+## Return number of threads ----------------------------------------------------
+
+cat("Num threads: "); print(parallel::detectCores(logical = FALSE))
+```

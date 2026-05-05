@@ -1,0 +1,18 @@
+# Whitelist: ignore everything at the project root, then re-include only the
+# files and folders that should be committed and pushed to GitHub.
+
+/*
+
+# Top-level files to keep
+!/.gitignore
+!/README.md
+
+# Functions folder — keep entire contents
+!/functions/
+
+# Code folder — keep only the .R, .Rmd and .pdf source/output
+!/code/
+/code/*
+!/code/code_position_irrigation.R
+!/code/code_position_irrigation.Rmd
+!/code/code_position_irrigation.pdf
