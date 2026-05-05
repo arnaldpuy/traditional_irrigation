@@ -1,6 +1,6 @@
 
 
-# Traditional irrigation is more than just a productive strategy 
+# Traditional irrigation is more than just a production strategy 
 
 [Arnald Puy](https://www.arnaldpuy.com/), Carmen Aguiló-Rivera, Seth N. Linga, 
 Samuel Flinders, Olivia Richards, Samuel Flinders, Miguel Banegas García,
