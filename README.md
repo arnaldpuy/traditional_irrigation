@@ -8,7 +8,7 @@ Gerlo Borghuis, Louise Busschaert, Antonio Candel Turpín, Giovanni de Grandis,
 Mona Liza F. Delos Reyes, Francisco Garrido Avilés, Pablo Garrido Guillamón,
 Jose María García Avilés, Jerry Knox, Pierre Laluet, Bruce Lankford, Antonio Mirón, 
 Nicola Paciolla, Robert Reinecke, Bich Tran, Saskia van der Kooij, Dominik Wisser, 
-Victoria Reyes-García.
+Victoria Reyes-García
 
 R code accompanying the position paper *Traditional irrigation is more than just a
 production strategy*, whose abstract is the following: 
