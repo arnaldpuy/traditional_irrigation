@@ -1,6 +1,6 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20036438.svg)](https://doi.org/10.5281/zenodo.20036438)
 
-# Traditional irrigation is more than just a production strategy 
+# Traditional irrigation is more than a production strategy 
 
 [Arnald Puy](https://www.arnaldpuy.com/), Carmen Aguiló-Rivera, Seth N. Linga, 
 Samuel Flinders, Olivia Richards, Samuel Flinders, Miguel Banegas García,
