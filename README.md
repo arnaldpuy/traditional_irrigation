@@ -1,4 +1,5 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20036438.svg)](https://doi.org/10.5281/zenodo.20036438)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20036380.svg)](https://doi.org/10.5281/zenodo.20036380)
+
 
 # Traditional irrigation is more than a production strategy 
 
@@ -32,6 +33,7 @@ across ten global irrigated-area datasets and three spatial resolutions (<https:
 - [How to run](#how-to-run)
 - [Functions](#functions)
 - [Outputs](#outputs)
+- [Citation](#citation)
 - [License](#license)
 
 ---
@@ -146,6 +148,14 @@ For each of the ten irrigated-area datasets and each spatial resolution
 |--------|-------------|
 | `plot_locations` | Map of the seven interview sites in Spain |
 | `plot_wordcloud` | Faceted wordclouds (irrigators vs scientists) |
+
+---
+
+## Citation
+
+If you use this code, please cite it as:
+
+> Puy, A., Aguiló-Rivera, C., Linga, S. N., Olivia, R., & Flinders, S. (2026). *Code of Traditional irrigation is more than a production strategy* (v0.3). Zenodo. <https://doi.org/10.5281/zenodo.20441330>
 
 ---
 
