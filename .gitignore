@@ -16,3 +16,9 @@
 !/code/code_position_irrigation.R
 !/code/code_position_irrigation.Rmd
 !/code/code_position_irrigation.pdf
+
+# Conceptual diagrams (TikZ source + rendered figure)
+!/code/pillars_diagram.tex
+!/code/pillars_diagram.pdf
+!/code/pillars_diagram2.tex
+!/code/pillars_diagram2.pdf
