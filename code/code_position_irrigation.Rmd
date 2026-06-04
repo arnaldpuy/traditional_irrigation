@@ -137,8 +137,8 @@ scientists_wc[, group := "Scientists"]
 
 # Top 50 per group -----------------------------------------------------------
 
-irrigators_wc <- setorder(irrigators_wc, -n)[1:50]
-scientists_wc  <- setorder(scientists_wc,  -n)[1:50]
+irrigators_wc <- setorder(irrigators_wc, -n)[1:70]
+scientists_wc  <- setorder(scientists_wc,  -n)[1:70]
 
 # Combine ---------------------------------------------------------------------
 
@@ -147,13 +147,15 @@ wc_data <- rbind(irrigators_wc, scientists_wc)
 
 ## Plot wordcloud
 
-```{r plot-wordcloud, fig.width=6.4, fig.height=3.4, dependson="load-vocab"}
+```{r plot-wordcloud, fig.width=6.4, fig.height=3.8, dependson="load-vocab"}
 # WORDCLOUD ###################################################################
 
 plot_wordcloud <- ggplot(wc_data, aes(label = word, size = n)) +
-  geom_text_wordcloud(seed = 42, color = "black") +
+  geom_text_wordcloud(seed = 42, color = "black", rm_outside = TRUE) +
   scale_size_area(max_size = 6) +
-  facet_grid(. ~ group) +
+  facet_grid(. ~ group,
+             labeller = as_labeller(c("Traditional irrigators" = "Traditional irrigators",
+                                      "Scientists" = "Irrigation scientists"))) +
   theme_AP()
 
 plot_wordcloud

@@ -105,9 +105,11 @@ wc_data <- rbind(irrigators_wc, scientists_wc)
 # WORDCLOUD ###################################################################
 
 plot_wordcloud <- ggplot(wc_data, aes(label = word, size = n)) +
-  geom_text_wordcloud(seed = 42, color = "black") +
+  geom_text_wordcloud(seed = 42, color = "black", rm_outside = TRUE) +
   scale_size_area(max_size = 6) +
-  facet_grid(. ~ group) +
+  facet_grid(. ~ group,
+             labeller = as_labeller(c("Traditional irrigators" = "Traditional irrigators",
+                                      "Scientists" = "Irrigation scientists"))) +
   theme_AP()
 
 plot_wordcloud
