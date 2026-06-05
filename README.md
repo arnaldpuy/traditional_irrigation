@@ -28,6 +28,7 @@ Spanish regions, and 2) a quantification of Spain's share of European irrigated 
 across ten global irrigated-area datasets and three spatial resolutions (<https://zenodo.org/records/19844960>).
 
 - [Background](#background)
+- [Assumption tables](#assumption-tables)
 - [Repository structure](#repository-structure)
 - [Dependencies](#dependencies)
 - [How to run](#how-to-run)
@@ -43,6 +44,20 @@ across ten global irrigated-area datasets and three spatial resolutions (<https:
 The paper argues that traditional irrigation systems carry
 cultural, ecological and institutional value that is invisible in efficiency-oriented
 modernization projects. 
+
+---
+
+## Assumption tables
+
+The tables with the list of assumptions elicited from the irrigators for all
+seven case studies are released as supplementary materials, available on GitHub
+(<https://github.com/Aguilo-Rivera/traditional_irrigation_beyond_practice>) and
+on Zenodo (<https://zenodo.org/records/20545786>):
+
+> Aguiló-Rivera, C., Linga, S. N., Richards, O., Flinders, S., & Puy, A. (2026).
+> *Supplementary Materials for the paper Traditional irrigation beyond practice:
+> cultural and cognitive dimensions of Spanish irrigators.* Zenodo.
+> <https://doi.org/10.5281/zenodo.20545786>
 
 ---
 
