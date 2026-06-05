@@ -170,7 +170,7 @@ For each of the ten irrigated-area datasets and each spatial resolution
 
 If you use this code, please cite it as:
 
-> Puy, A., Aguiló-Rivera, C., Linga, S. N., Olivia, R., & Flinders, S. (2026). *Code of Traditional irrigation is more than a production strategy* (v0.3). Zenodo. <https://doi.org/10.5281/zenodo.20441330>
+> Puy, A., Aguiló-Rivera, C., Linga, S. N., Olivia, R., & Flinders, S. (2026). *Code of Traditional irrigation is more than a production strategy* (v1.0). Zenodo. <https://doi.org/10.5281/zenodo.20441330>
 
 ---
 
