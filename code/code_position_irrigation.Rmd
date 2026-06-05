@@ -1,5 +1,5 @@
 ---
-title: "Traditional irrigation is more than just a production strategy"
+title: "Traditional irrigation is more than a production strategy"
 subtitle: "R code"
 author: "Arnald Puy"
 header-includes:

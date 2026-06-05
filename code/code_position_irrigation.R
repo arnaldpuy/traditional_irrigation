@@ -1,8 +1,8 @@
-## ----setup, include=FALSE------------------------------------------------------------
+## ----setup, include=FALSE------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE, dev = "pdf", cache = TRUE)
 
 
-## ----preliminary, warning=FALSE, message=FALSE, results="hide"-----------------------
+## ----preliminary, warning=FALSE, message=FALSE, results="hide"-----------
 # PRELIMINARY FUNCTIONS ########################################################
 
 library(sensobol)
@@ -17,7 +17,7 @@ r_functions <- list.files(path = here("functions"),
 invisible(lapply(r_functions, source))
 
 
-## ----locations, dependson="preliminary"----------------------------------------------
+## ----locations, dependson="preliminary"----------------------------------
 # INTERVIEW LOCATIONS #########################################################
 
 locations <- data.table(
@@ -27,13 +27,13 @@ locations <- data.table(
 )
 
 
-## ----boundary, dependson="preliminary"-----------------------------------------------
+## ----boundary, dependson="preliminary"-----------------------------------
 # SPAIN BOUNDARY ##############################################################
 
 spain <- ne_countries(scale = "medium", country = "Spain", returnclass = "sf")
 
 
-## ----plot, fig.width=3, fig.height=3, dependson=c("locations","boundary")------------
+## ----plot, fig.width=3, fig.height=3, dependson=c("locations","boundary")----
 # PLOT ########################################################################
 
 plot_locations <- ggplot() +
@@ -62,7 +62,7 @@ plot_locations <- ggplot() +
 plot_locations
 
 
-## ----load-vocab, dependson="preliminary"---------------------------------------------
+## ----load-vocab, dependson="preliminary"---------------------------------
 # LOAD VOCABULARY DATA ########################################################
 
 # Irrigators: factors sheet, general list, English translation ----------------
@@ -93,15 +93,15 @@ scientists_wc[, group := "Scientists"]
 
 # Top 50 per group -----------------------------------------------------------
 
-irrigators_wc <- setorder(irrigators_wc, -n)[1:50]
-scientists_wc  <- setorder(scientists_wc,  -n)[1:50]
+irrigators_wc <- setorder(irrigators_wc, -n)[1:70]
+scientists_wc  <- setorder(scientists_wc,  -n)[1:70]
 
 # Combine ---------------------------------------------------------------------
 
 wc_data <- rbind(irrigators_wc, scientists_wc)
 
 
-## ----plot-wordcloud, fig.width=6.4, fig.height=3.4, dependson="load-vocab"-----------
+## ----plot-wordcloud, fig.width=6.4, fig.height=3.8, dependson="load-vocab"----
 # WORDCLOUD ###################################################################
 
 plot_wordcloud <- ggplot(wc_data, aes(label = word, size = n)) +
@@ -115,7 +115,7 @@ plot_wordcloud <- ggplot(wc_data, aes(label = word, size = n)) +
 plot_wordcloud
 
 
-## ----pyramid, dependson="load-vocab", fig.width=3.5, fig.height=3.3------------------
+## ----pyramid, dependson="load-vocab", fig.width=3.5, fig.height=3.3------
 
 # PLOT PYRAMID / DIVERGING BAR #################################################
 
@@ -147,7 +147,7 @@ plot_alt_pyramid <- ggplot(wc_pyr_long,
 plot_alt_pyramid
 
 
-## ----alt_treemap, dependson="load-vocab", fig.width=6, fig.height=4------------------
+## ----alt_treemap, dependson="load-vocab", fig.width=6, fig.height=4------
 
 # PLOT TREEMAP #################################################################
 
@@ -164,7 +164,7 @@ plot_alt_treemap <- ggplot(wc_data,
 plot_alt_treemap
 
 
-## ----spain_share---------------------------------------------------------------------
+## ----spain_share---------------------------------------------------------
 
 # READ IN DATASETS #############################################################
 
@@ -182,7 +182,7 @@ country_level_irrigated_areas[continent == "Europe",
                               by = .(dataset, resolution)]
 
 
-## ----session_information, dependson="preliminary"------------------------------------
+## ----session_information, dependson="preliminary"------------------------
 # SESSION INFORMATION #########################################################
 
 sessionInfo()
